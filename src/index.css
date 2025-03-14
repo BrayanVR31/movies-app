@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --spacing-nav: 1200px;
+  --spacing-nav-y: 77.5px;
+  --breakpoint-nav: 1310px;
+  --spacing-app-y: calc(100vh - var(--spacing-nav-y));
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-950;
+  }
+}
