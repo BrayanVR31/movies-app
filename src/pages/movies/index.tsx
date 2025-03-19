@@ -1,15 +1,13 @@
-import { useMoviesByFilter } from "@/hooks/useMovies";
 import { Suspense, lazy } from "react";
 import { SkeletonMovieList } from "@/components/ui/skeleton";
+import { GridTitle } from "@/components/ui/grid/GridTitle";
 
 const MovieList = lazy(() => import("./MovieList"));
 
 const Home = () => {
-  const { data } = useMoviesByFilter();
-  console.log(data);
   return (
     <div>
-      <h4>Movies</h4>
+      <GridTitle>Movies</GridTitle>
       <Suspense fallback={<SkeletonMovieList totalCards={20} />}>
         <MovieList />
       </Suspense>

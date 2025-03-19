@@ -9,7 +9,7 @@ const MovieGenre = ({ movieGenresIds }: Props) => {
   return (
     <p className="text-xs text-gray-200">
       {data.genres
-        .filter((genreId) => movieGenresIds.includes(genreId.id))
+        .filter((genreId) => movieGenresIds?.includes(genreId.id))
         .map((genre) => genre.name)
         .join(", ")}
     </p>

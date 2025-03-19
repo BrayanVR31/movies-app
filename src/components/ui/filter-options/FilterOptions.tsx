@@ -9,7 +9,7 @@ const GenreFilter = lazy(() =>
 
 const FilterOptions = () => {
   return (
-    <div className="flex justify-center gap-x-4">
+    <div className="flex justify-center items-start gap-x-4">
       <Suspense fallback={<div>Loading...</div>}>
         <GenreFilter />
       </Suspense>

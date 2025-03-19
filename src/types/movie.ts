@@ -4,6 +4,7 @@ interface BaseMovie {
   backdrop_path: string;
   poster_path: string;
   vote_average: number;
+  popularity: number;
 }
 
 interface Genres {

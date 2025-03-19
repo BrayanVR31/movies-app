@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { MediaStoreState, MediaStoreActions } from "@/types/mediaStoreState";
 
-type MovieState = {} & MediaStoreState;
-type MovieActions = {} & MediaStoreActions;
+type TvState = {} & MediaStoreState;
+type TvActions = {} & MediaStoreActions;
 
-export const useMovieStore = create<MovieState & MovieActions>()((set) => ({
+export const useTvStore = create<TvState & TvActions>()((set) => ({
   genre: {
     id: 0,
-    genreType: "movie",
+    genreType: "tv",
   },
   setGenre: (id) =>
     set((state) => ({

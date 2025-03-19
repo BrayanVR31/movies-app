@@ -1,11 +1,4 @@
-import {
-  MouseEvent,
-  HTMLAttributes,
-  ReactNode,
-  useRef,
-  RefObject,
-  useEffect,
-} from "react";
+import { HTMLAttributes, ReactNode, useRef, RefObject } from "react";
 import { useDropdown } from ".";
 import { useOuterClick } from "@/hooks/useOuterClick";
 
@@ -15,7 +8,7 @@ interface Props {
   onClose?: () => void;
 }
 
-export const DropdownClose = ({ className, children, onClose }: Props) => {
+export const DropdownButton = ({ className, children, onClose }: Props) => {
   const refButton = useRef(null);
   const { setShowOptions, showOptions } = useDropdown();
   const { watchOnClick } = useOuterClick(
@@ -30,7 +23,7 @@ export const DropdownClose = ({ className, children, onClose }: Props) => {
   return (
     <button
       ref={refButton}
-      className={`cursor-pointer ${className} ${activeClassName}`}
+      className={`cursor-pointer ${className} ${activeClassName} [&_svg]:w-3.5`}
       onClick={onClick}
     >
       {children}

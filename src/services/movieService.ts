@@ -26,7 +26,8 @@ export const getUpcomingMovies = async () => {
 };
 
 export const getPopularMovies = async () => {
-  return (await axios.get<TMDB<Movie>>("/movie/popular")).data;
+  return (await axios.get<TMDB<Movie>>("/movie/popular?include_adult=false"))
+    .data;
 };
 
 export const getGenres = async () => {
@@ -50,14 +51,20 @@ interface FilterOptions {
 export const getMoviesByOptions = async ({ sort_by, genre }: FilterOptions) => {
   const sort = sort_by ? `&sort_by=${sort_by.type}.${sort_by.mode}` : "";
   const genres = genre && genre !== 0 ? `&with_genres=${genre}` : "";
-  console.log("service: ", genres);
   return (
     await axios.get<TMDB<Movie>>(
-      `/discover/movie?include_adult=false&include_video=false&language=en-US&year=2024${genres}${sort}&vote_count.gte=85`
+      `/discover/movie?include_adult=false&include_video=false&language=en-US&year=2025${genres}${sort}&vote_count.gte=85`
     )
   ).data;
 };
 
-export const getMovieByName = async (keyword: string) => {
-  return (await axios.get<MovieDetails>(`/movie?query=${keyword}`)).data;
+export const getMovieByName = async (keyword: string, signal?: AbortSignal) => {
+  return (
+    await axios.get<TMDB<Movie>>(
+      `search/movie?query=${keyword}&include_adult=false`,
+      {
+        signal,
+      }
+    )
+  ).data;
 };

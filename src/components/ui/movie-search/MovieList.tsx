@@ -3,14 +3,12 @@ import MovieCard, { SkeletonMovieCard } from "@/components/ui/movie-card";
 import { Movie } from "@/types/movie";
 import { useMovies } from "@/hooks/useMovies";
 import { useMovieStore } from "@/store/useMovieStore";
-import { useAppStore } from "@/store/useAppStore";
 import { GridContainer } from "@/components/ui/grid";
-import { sortMovies, filterByGenre } from "@/utils/sortList";
 
 interface ListProps {
   data: Movie[];
 }
-const List = ({ data }: ListProps) => {
+export const List = ({ data }: ListProps) => {
   if (data.length <= 0)
     return (
       <div className="text-neutral-300 text-lg flex flex-col w-full items-center mt-12">
@@ -20,6 +18,7 @@ const List = ({ data }: ListProps) => {
     );
   return (
     <GridContainer>
+      {" "}
       {data.map((movie) => (
         <MovieCard
           key={movie.id}
@@ -37,12 +36,18 @@ const List = ({ data }: ListProps) => {
 };
 
 const MovieList = () => {
-  const [by, order] = useAppStore((state) => state.query.sort);
-  const selectedGenre = useMovieStore((state) => state.genre.id);
+  console.log("movie list is rendering...");
+  const selectedGenre = useMovieStore((state) => state.movie.queryParams.genre);
   const { data: movies } = useMovies("popular");
-  const filterMoviesByGenre = filterByGenre(movies.results, selectedGenre);
-  const transformedMovies = sortMovies(filterMoviesByGenre, [by, order]);
-  return <List data={transformedMovies} />;
+  console.time("filtered movies");
+  const filteredMovies = () => {
+    if (selectedGenre === 0) return movies.results;
+    return movies.results.filter((movie) =>
+      movie.genre_ids.includes(selectedGenre)
+    );
+  };
+  console.timeEnd("filtered movies");
+  return <List data={filteredMovies()} />;
 };
 
 interface SkeletonMovieListProps {
@@ -52,6 +57,7 @@ interface SkeletonMovieListProps {
 export const SkeletonMovieList = ({
   totalCards = 8,
 }: SkeletonMovieListProps) => {
+  console.log("skeleton movie list rendering...");
   return (
     <div className="grid grid-cols-[repeat(auto-fit,_190px)] justify-between gap-x-4 gap-y-4 text-white">
       {Array(totalCards)
